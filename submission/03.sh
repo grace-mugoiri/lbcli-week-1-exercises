@@ -1,2 +1,2 @@
 # Write the bitcoin cli command to get the bitcoin node latest block height 
-bitcoin-cli -regtest getblockchaininfo | grep "blocks" | cut -d ':' -f 2 | tr -d ' '
+bitcoin-cli -regtest getblockchaininfo | jq -r '.blocks'

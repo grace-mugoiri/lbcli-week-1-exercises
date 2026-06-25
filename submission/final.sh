@@ -64,13 +64,11 @@ echo "Generate one of each address type (legacy, p2sh-segwit, bech32, bech32m)"
 # WRITE YOUR SOLUTION BELOW:
 LEGACY_ADDR=$(bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" legacy)
 check_cmd "Legacy address generation"
-P2SH_ADDR=
+P2SH_ADDR=$(bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" p2sh-segwit)
 check_cmd "P2SH address generation"
-bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" p2sh-segwit
-SEGWIT_ADDR=
+SEGWIT_ADDR=$(bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" bech32)
 check_cmd "SegWit address generation"
-bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" bech32
-TAPROOT_ADDR=
+TAPROOT_ADDR=$(bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" bech32m)
 check_cmd "Taproot address generation"
 bitcoin-cli -regtest -rpcwallet=btrustwallet getnewaddress "builderswallet" bech32m
 
@@ -115,8 +113,7 @@ echo "--------------------------------------------"
 echo "To ensure the P2SH vault is secure, verify it's a valid Bitcoin address"
 # STUDENT TASK: Validate the P2SH address
 # WRITE YOUR SOLUTION BELOW:
-P2SH_VALID=$(bitcoin-cli -regtest -rpcwallet=btrustwallet validateaddress "$P2SH_ADDR" | grep "isvalid" | cut -d ':' -f 2 | tr -d ' ')
-check_cmd "Address validation"
+P2SH_VALID=$(bitcoin-cli -regtest -rpcwallet=btrustwallet validateaddress "$P2SH_ADDR" | grep -oE '"isvalid":[ ]*(true|false)' | grep -oE '(true|false)')check_cmd "Address validation"
 echo "P2SH vault validation: $P2SH_VALID"
 
 if [[ "$P2SH_VALID" == "true" ]]; then
