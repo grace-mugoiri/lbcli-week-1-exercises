@@ -113,10 +113,15 @@ echo "--------------------------------------------"
 echo "To ensure the P2SH vault is secure, verify it's a valid Bitcoin address"
 # STUDENT TASK: Validate the P2SH address
 # WRITE YOUR SOLUTION BELOW:
+#!/bin/bash
+
+# Check if the following address is valid or invalid. Return only `true` or `false`
+# Address: `bcrt1qckgvfee4qs6y98jrcn8qc0m6ce6sxls0vac3yy`
+
+# Check if the following address is valid or invalid. Return only `true` or `false`
+# Address: `bcrt1qckgvfee4qs6y98jrcn8qc0m6ce6sxls0vac3yy`
+
 P2SH_VALID=$(bitcoin-cli -regtest validateaddress "bcrt1qckgvfee4qs6y98jrcn8qc0m6ce6sxls0vac3yy" | jq -r '.isvalid')
-
-echo "P2SH vault validation: $P2SH_VALID"
-
 if [[ "$P2SH_VALID" == "true" ]]; then
   echo "Vault is secure! You may proceed to the next challenge."
 else
