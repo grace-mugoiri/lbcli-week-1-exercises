@@ -1,2 +1,2 @@
 # Generate a native SegWit address.
-bitcoin-cli getnewaddress "builderswallet" bech32
+bitcoin-cli -regtest getnewaddress "builderswallet" bech32
