@@ -122,6 +122,8 @@ echo "To ensure the P2SH vault is secure, verify it's a valid Bitcoin address"
 # Address: `bcrt1qckgvfee4qs6y98jrcn8qc0m6ce6sxls0vac3yy`
 
 P2SH_VALID=$(bitcoin-cli -regtest validateaddress "bcrt1qckgvfee4qs6y98jrcn8qc0m6ce6sxls0vac3yy" | jq -r '.isvalid')
+check_cmd "Address validation"
+echo "P2SH address validation result: $P2SH_VALID"
 if [[ "$P2SH_VALID" == "true" ]]; then
   echo "Vault is secure! You may proceed to the next challenge."
 else
