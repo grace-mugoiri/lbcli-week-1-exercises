@@ -181,10 +181,12 @@ NEW_TAPROOT_ADDR=$(trim "$NEW_TAPROOT_ADDR")
 # WRITE YOUR SOLUTION BELOW:
 ADDR_INFO=$(bitcoin-cli -regtest -rpcwallet=btrustwallet getaddressinfo "$NEW_TAPROOT_ADDR")
 check_cmd "Getting address info"
+echo "$ADDR_INFO" | jq
 
 # STUDENT TASK: Extract the internal key (the x-only pubkey) from the descriptor
 # WRITE YOUR SOLUTION BELOW:
-INTERNAL_KEY=$(echo "$ADDR_INFO" | jq -r '.desc' | sed -E 's/^tr\(([0-9a-f]+)\).*$/\1/')
+INTERNAL_KEY=$(echo "$ADDR_INFO" | jq -r '.desc' | sed -E 's/^tr\(\[[^]]+\]([0-9a-f]+).*$/\1/')
+check_cmd "Extracting key from descriptor"
 check_cmd "Extracting key from descriptor"
 INTERNAL_KEY=$(trim "$INTERNAL_KEY")
 
@@ -206,7 +208,6 @@ echo "Taproot treasure map: $TAPROOT_DESCRIPTOR"
 # WRITE YOUR SOLUTION BELOW:
 DERIVED_ADDR=$(bitcoin-cli -regtest deriveaddresses "$TAPROOT_DESCRIPTOR" | jq -r '.[0]')
 check_cmd "Address derivation"
-DERIVED_ADDR=$(echo "$DERIVED_ADDR_RAW" | tr -d '[]" \n\t')
 echo "Derived quantum vault address: $DERIVED_ADDR"
 
 # Verify the addresses match
